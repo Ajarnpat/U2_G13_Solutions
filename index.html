@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Connected Bodies & Derivations - AP Physics 1</title>
+<style>
+  :root{
+    --ink:#16202a; --muted:#5d6874; --paper:#ffffff; --bg:#eef3f7;
+    --line:#d7e0e7; --navy:#173a5e; --blue:#215f91; --green:#1f6b4e;
+    --purple:#6743a5; --amber:#8a5a00; --soft-blue:#eef6fc; --soft-green:#eef8f3;
+    --soft-purple:#f5f0fb; --soft-amber:#fff8e7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.48}
+  header{background:linear-gradient(135deg,#173a5e,#215f91);color:white;padding:24px 20px 20px;box-shadow:0 2px 8px #0002}
+  .wrap{max-width:1050px;margin:0 auto}
+  h1{font-size:clamp(24px,3vw,38px);margin:0 0 5px;letter-spacing:.2px}
+  header p{margin:0;color:#e8f2f9}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .toolbar button{border:1px solid #ffffff80;background:#ffffff12;color:white;padding:9px 13px;border-radius:8px;cursor:pointer;font-weight:650}
+  .toolbar button:hover{background:#ffffff22}
+  main{padding:20px}
+  .intro,.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 3px 12px #173a5e12}
+  .intro{padding:17px 19px;margin-bottom:18px}
+  .intro h2{margin:0 0 8px;font-size:19px;color:var(--navy)}
+  .equation-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:12px}
+  .eqref{background:#f7fafc;border:1px solid var(--line);border-radius:9px;padding:11px 13px}
+  .eqref b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+  .eq{font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:1.12rem}
+  .card{margin:0 0 18px;overflow:hidden}
+  .qhead{padding:17px 19px 13px;border-bottom:1px solid var(--line)}
+  .kicker{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:750;color:var(--blue)}
+  .qhead h2{margin:3px 0 7px;font-size:21px;color:var(--navy)}
+  .prompt{margin:0;color:#25323e}
+  .note{margin-top:11px;padding:9px 11px;background:var(--soft-amber);border-left:4px solid #d89a17;border-radius:6px;color:#5d4100;font-size:14px}
+  .diagram{padding:12px 19px 5px;display:flex;justify-content:center;overflow-x:auto}
+  svg{max-width:100%;height:auto}
+  .controls{display:flex;gap:9px;flex-wrap:wrap;padding:14px 19px 16px}
+  .reveal{border:0;border-radius:8px;color:white;padding:10px 14px;font-weight:730;cursor:pointer;box-shadow:0 1px 3px #0002}
+  .reveal.answer{background:var(--green)} .reveal.work{background:var(--blue)} .reveal.mark{background:var(--purple)}
+  .reveal:hover{filter:brightness(1.07)} .reveal.active{outline:3px solid #1112;transform:translateY(-1px)}
+  .panel{display:none;margin:0 19px 18px;border-radius:10px;padding:15px 16px;border:1px solid var(--line)}
+  .panel.show{display:block}
+  .panel.answer{background:var(--soft-green)} .panel.work{background:var(--soft-blue)} .panel.mark{background:var(--soft-purple)}
+  .panel h3{margin:0 0 9px;font-size:17px}
+  .start{background:white;border:1px solid #b9d2e4;border-left:4px solid var(--blue);padding:10px 12px;border-radius:7px;margin:9px 0 12px}
+  .start b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:4px}
+  .steps{margin:8px 0 0 21px;padding:0}.steps li{margin:6px 0}
+  .ms{width:100%;border-collapse:collapse;margin-top:7px;background:white}.ms th,.ms td{border:1px solid #d8d0e5;padding:8px 9px;vertical-align:top}.ms th{background:#eee7f8;text-align:left}.pts{white-space:nowrap;text-align:center;font-weight:700}
+  .final{font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-size:1.18rem;font-weight:700}
+  .small{font-size:13px;color:var(--muted)}
+  footer{max-width:1050px;margin:0 auto;padding:4px 20px 28px;color:var(--muted);font-size:13px}
+  sub{font-size:.72em;vertical-align:-.25em}
+  @media (max-width:650px){main{padding:12px}.qhead,.controls,.diagram{padding-left:14px;padding-right:14px}.panel{margin-left:14px;margin-right:14px} .ms{font-size:13px}}
+  @media print{body{background:white}.toolbar,.controls{display:none}.panel{display:block!important;break-inside:avoid}.card{box-shadow:none;break-inside:avoid}header{background:white;color:black;border-bottom:2px solid #333}header p{color:#333}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Connected Bodies &amp; Derivations</h1>
+    <p>AP Physics 1 companion app - reveal the answer, full working, or a suggested AP-style markscheme.</p>
+    <div class="toolbar">
+      <button onclick="hideAll()">Hide all solutions</button>
+      <button onclick="showAll('answer')">Show all answers</button>
+      <button onclick="showAll('work')">Show all workings</button>
+      <button onclick="showAll('mark')">Show all markschemes</button>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="intro">
+    <h2>Start from a law or a defined equation</h2>
+    <div>The worksheet's central idea is that a derivation should begin with a fundamental law, definition, or an equation from the AP reference information - not with a memorised special-case result.</div>
+    <div class="equation-grid">
+      <div class="eqref"><b>Dynamics</b><div class="eq">F⃗<sub>net</sub> = m a⃗</div></div>
+      <div class="eqref"><b>System acceleration</b><div class="eq">a⃗<sub>sys</sub> = ΣF⃗ / m<sub>sys</sub></div></div>
+      <div class="eqref"><b>Constant-acceleration kinematics</b><div class="eq">x = x<sub>0</sub> + v<sub>x0</sub>t + ½a<sub>x</sub>t²</div></div>
+    </div>
+  </section>
+
+  <section class="card" id="q1">
+    <div class="qhead"><div class="kicker">Warm-up 1</div><h2>Acceleration and distance on a frictionless surface</h2>
+      <p class="prompt">An object of mass <i>m</i> starts from rest and is pulled to the right along a horizontal frictionless surface by a constant tension <i>T</i>. Derive expressions for its acceleration <i>a</i> and the distance <i>D</i> moved after time <i>t</i>. State assumptions.</p>
+    </div>
+    <div class="diagram">
+      <svg width="520" height="120" viewBox="0 0 520 120" aria-label="Block pulled to the right by tension T">
+        <line x1="38" y1="87" x2="480" y2="87" stroke="#7b8792" stroke-width="3"/>
+        <rect x="185" y="42" width="94" height="45" rx="3" fill="#e8edf1" stroke="#263848" stroke-width="2"/>
+        <text x="232" y="70" text-anchor="middle" font-size="20" font-style="italic">m</text>
+        <line x1="279" y1="61" x2="400" y2="61" stroke="#215f91" stroke-width="4"/>
+        <polygon points="400,61 386,53 386,69" fill="#215f91"/><text x="418" y="67" font-size="19" font-style="italic">T</text>
+        <line x1="205" y1="103" x2="330" y2="103" stroke="#1f6b4e" stroke-width="3"/>
+        <polygon points="330,103 318,96 318,110" fill="#1f6b4e"/><text x="345" y="108" font-size="17" font-style="italic">a</text>
+      </svg>
+    </div>
+    <div class="controls"><button class="reveal answer" onclick="togglePanel(this,'answer')">Answer only</button><button class="reveal work" onclick="togglePanel(this,'work')">Display workings</button><button class="reveal mark" onclick="togglePanel(this,'mark')">Display markscheme</button></div>
+    <div class="panel answer"><h3>Answer</h3><div class="final">a = T/m &nbsp;&nbsp;&nbsp; and &nbsp;&nbsp;&nbsp; D = Tt²/(2m)</div><p>Assumptions include constant mass, constant <i>T</i>, negligible friction/drag, horizontal motion, and the object starts from rest.</p></div>
+    <div class="panel work"><h3>Workings</h3><div class="start"><b>AP equation-sheet start point</b><span class="eq">F⃗<sub>net</sub> = m a⃗</span></div>
+      <ol class="steps"><li>Take right as positive. The only unbalanced horizontal force is <i>T</i>, so <span class="eq">T = ma</span>.</li><li>Therefore <span class="final">a = T/m</span>.</li><li>For the distance, start from the AP kinematics equation <span class="eq">x = x<sub>0</sub> + v<sub>x0</sub>t + ½a<sub>x</sub>t²</span>.</li><li>Since the object starts from rest, <span class="eq">v<sub>x0</sub> = 0</span>, and with <span class="eq">D = x - x<sub>0</sub></span>: <span class="eq">D = ½at²</span>.</li><li>Substitute <span class="eq">a = T/m</span>: <span class="final">D = Tt²/(2m)</span>.</li></ol>
+      <p><b>Assumptions:</b> friction/drag negligible; <i>T</i> is constant; mass is constant; the surface is horizontal so vertical forces balance; the motion begins from rest.</p></div>
+    <div class="panel mark"><h3>Suggested markscheme - 5 points</h3><table class="ms"><tr><th>Evidence</th><th>Points</th></tr><tr><td>Starts from Newton's second law and identifies the horizontal net force as <i>T</i>.</td><td class="pts">1</td></tr><tr><td>Obtains <span class="eq">a = T/m</span>.</td><td class="pts">1</td></tr><tr><td>Starts the displacement derivation from <span class="eq">x = x<sub>0</sub> + v<sub>x0</sub>t + ½a<sub>x</sub>t²</span> and uses <span class="eq">v<sub>x0</sub>=0</span>.</td><td class="pts">1</td></tr><tr><td>Substitutes the acceleration to obtain <span class="eq">D = Tt²/(2m)</span>.</td><td class="pts">1</td></tr><tr><td>States appropriate assumptions (at least two relevant assumptions).</td><td class="pts">1</td></tr></table></div>
+  </section>
+
+  <section class="card" id="q2">
+    <div class="qhead"><div class="kicker">Warm-up 2</div><h2>Applied force with a resistive force</h2>
+      <p class="prompt">An object of mass <i>m</i> accelerates to the right with acceleration <i>a</i>. A resistive force <i>R</i> acts to the left. Derive the applied force <i>F</i>.</p>
+      <div class="note"><b>Worksheet notation note:</b> the written question calls the applied force <i>F</i>, while the diagram labels that rightward force <i>T</i>. The solution uses <i>F</i>, matching the written question.</div>
+    </div>
+    <div class="diagram"><svg width="540" height="118" viewBox="0 0 540 118"><rect x="220" y="36" width="100" height="48" fill="#e8edf1" stroke="#263848" stroke-width="2"/><text x="270" y="66" text-anchor="middle" font-size="20" font-style="italic">m</text><line x1="220" y1="56" x2="105" y2="56" stroke="#b64a45" stroke-width="4"/><polygon points="105,56 119,48 119,64" fill="#b64a45"/><text x="82" y="62" font-size="19" font-style="italic">R</text><line x1="320" y1="56" x2="438" y2="56" stroke="#215f91" stroke-width="4"/><polygon points="438,56 424,48 424,64" fill="#215f91"/><text x="454" y="62" font-size="19" font-style="italic">F</text><line x1="230" y1="101" x2="350" y2="101" stroke="#1f6b4e" stroke-width="3"/><polygon points="350,101 338,94 338,108" fill="#1f6b4e"/><text x="365" y="106" font-size="17" font-style="italic">a</text></svg></div>
+    <div class="controls"><button class="reveal answer" onclick="togglePanel(this,'answer')">Answer only</button><button class="reveal work" onclick="togglePanel(this,'work')">Display workings</button><button class="reveal mark" onclick="togglePanel(this,'mark')">Display markscheme</button></div>
+    <div class="panel answer"><h3>Answer</h3><div class="final">F = ma + R</div></div>
+    <div class="panel work"><h3>Workings</h3><div class="start"><b>AP equation-sheet start point</b><span class="eq">F⃗<sub>net</sub> = m a⃗</span></div><ol class="steps"><li>Take right as positive.</li><li>The net horizontal force is <span class="eq">F - R</span>.</li><li>Apply Newton's second law: <span class="eq">F - R = ma</span>.</li><li>Rearrange: <span class="final">F = ma + R</span>.</li></ol></div>
+    <div class="panel mark"><h3>Suggested markscheme - 3 points</h3><table class="ms"><tr><th>Evidence</th><th>Points</th></tr><tr><td>Uses Newton's second law with a stated/consistent positive direction.</td><td class="pts">1</td></tr><tr><td>Writes <span class="eq">F - R = ma</span>.</td><td class="pts">1</td></tr><tr><td>Rearranges to <span class="eq">F = ma + R</span>.</td><td class="pts">1</td></tr></table></div>
+  </section>
+
+  <section class="card" id="q3">
+    <div class="qhead"><div class="kicker">Warm-up 3</div><h2>Two connected bodies - derive the string tension</h2>
+      <p class="prompt">Two bodies of masses <i>m</i><sub>1</sub> and <i>m</i><sub>2</sub> are connected by a light, inextensible string. A force <i>P</i> pulls the right-hand body to the right. Derive the tension <i>T</i>.</p>
+      <div class="note"><b>Worksheet correction:</b> the sentence says <i>P</i> is applied to B<sub>1</sub>, but the diagram clearly shows <i>P</i> applied to the right-hand body <i>m</i><sub>2</sub>. It also says “tension and F” where the applied force is <i>P</i>. The solution follows the diagram, which is the physically consistent interpretation.</div>
+    </div>
+    <div class="diagram"><svg width="610" height="120" viewBox="0 0 610 120"><rect x="100" y="43" width="105" height="46" fill="#e8edf1" stroke="#263848" stroke-width="2"/><text x="152" y="71" text-anchor="middle" font-size="19" font-style="italic">m₁</text><rect x="310" y="43" width="105" height="46" fill="#e8edf1" stroke="#263848" stroke-width="2"/><text x="362" y="71" text-anchor="middle" font-size="19" font-style="italic">m₂</text><line x1="205" y1="66" x2="310" y2="66" stroke="#263848" stroke-width="3"/><text x="258" y="52" text-anchor="middle" font-size="18" font-style="italic">T</text><line x1="415" y1="66" x2="540" y2="66" stroke="#215f91" stroke-width="4"/><polygon points="540,66 526,58 526,74" fill="#215f91"/><text x="556" y="72" font-size="19" font-style="italic">P</text></svg></div>
+    <div class="controls"><button class="reveal answer" onclick="togglePanel(this,'answer')">Answer only</button><button class="reveal work" onclick="togglePanel(this,'work')">Display workings</button><button class="reveal mark" onclick="togglePanel(this,'mark')">Display markscheme</button></div>
+    <div class="panel answer"><h3>Answer</h3><div class="final">T = m<sub>1</sub>P / (m<sub>1</sub> + m<sub>2</sub>)</div></div>
+    <div class="panel work"><h3>Workings</h3><div class="start"><b>AP equation-sheet start point</b><span class="eq">a⃗<sub>sys</sub> = ΣF⃗ / m<sub>sys</sub></span> &nbsp; and &nbsp; <span class="eq">F⃗<sub>net</sub> = m a⃗</span></div><ol class="steps"><li>Because the string is light, taut, and inextensible, both blocks have the same acceleration magnitude <i>a</i>.</li><li>Treat both blocks as one system. The external horizontal force is <i>P</i> and the system mass is <span class="eq">m<sub>1</sub> + m<sub>2</sub></span>, so <span class="eq">a = P/(m<sub>1</sub> + m<sub>2</sub>)</span>.</li><li>Now isolate the left block <i>m</i><sub>1</sub>. Its only horizontal force is the tension, so <span class="eq">T = m<sub>1</sub>a</span>.</li><li>Substitute the system acceleration: <span class="final">T = m<sub>1</sub>P/(m<sub>1</sub> + m<sub>2</sub>)</span>.</li></ol></div>
+    <div class="panel mark"><h3>Suggested markscheme - 5 points</h3><table class="ms"><tr><th>Evidence</th><th>Points</th></tr><tr><td>Recognises the two bodies have the same acceleration because the string is taut and inextensible.</td><td class="pts">1</td></tr><tr><td>Uses a system form of Newton's second law.</td><td class="pts">1</td></tr><tr><td>Obtains <span class="eq">a = P/(m<sub>1</sub>+m<sub>2</sub>)</span>.</td><td class="pts">1</td></tr><tr><td>Applies <span class="eq">T = m<sub>1</sub>a</span> to the left block.</td><td class="pts">1</td></tr><tr><td>Obtains <span class="eq">T = m<sub>1</sub>P/(m<sub>1</sub>+m<sub>2</sub>)</span>.</td><td class="pts">1</td></tr></table></div>
+  </section>
+
+  <section class="card" id="q4">
+    <div class="qhead"><div class="kicker">Warm-up 4</div><h2>Three identical blocks - derive T<sub>1</sub> and T<sub>2</sub></h2><p class="prompt">Three identical blocks, each of mass <i>m</i>, are connected by two light strings and pulled to the right by an external force <i>F</i>. Derive the tensions <i>T</i><sub>1</sub> and <i>T</i><sub>2</sub>.</p></div>
+    <div class="diagram"><svg width="700" height="125" viewBox="0 0 700 125"><rect x="65" y="45" width="95" height="44" fill="#e8edf1" stroke="#263848" stroke-width="2"/><rect x="255" y="45" width="95" height="44" fill="#e8edf1" stroke="#263848" stroke-width="2"/><rect x="445" y="45" width="95" height="44" fill="#e8edf1" stroke="#263848" stroke-width="2"/><text x="112" y="73" text-anchor="middle" font-size="19" font-style="italic">m</text><text x="302" y="73" text-anchor="middle" font-size="19" font-style="italic">m</text><text x="492" y="73" text-anchor="middle" font-size="19" font-style="italic">m</text><line x1="160" y1="67" x2="255" y2="67" stroke="#263848" stroke-width="3"/><line x1="350" y1="67" x2="445" y2="67" stroke="#263848" stroke-width="3"/><text x="208" y="51" text-anchor="middle" font-size="17" font-style="italic">T₁</text><text x="398" y="51" text-anchor="middle" font-size="17" font-style="italic">T₂</text><line x1="540" y1="67" x2="650" y2="67" stroke="#215f91" stroke-width="4"/><polygon points="650,67 636,59 636,75" fill="#215f91"/><text x="666" y="73" font-size="19" font-style="italic">F</text><line x1="260" y1="108" x2="420" y2="108" stroke="#1f6b4e" stroke-width="3"/><polygon points="420,108 408,101 408,115" fill="#1f6b4e"/><text x="435" y="113" font-size="17" font-style="italic">a</text></svg></div>
+    <div class="controls"><button class="reveal answer" onclick="togglePanel(this,'answer')">Answer only</button><button class="reveal work" onclick="togglePanel(this,'work')">Display workings</button><button class="reveal mark" onclick="togglePanel(this,'mark')">Display markscheme</button></div>
+    <div class="panel answer"><h3>Answer</h3><div class="final">T<sub>1</sub> = F/3 &nbsp;&nbsp;&nbsp; and &nbsp;&nbsp;&nbsp; T<sub>2</sub> = 2F/3</div></div>
+    <div class="panel work"><h3>Workings</h3><div class="start"><b>AP equation-sheet start point</b><span class="eq">a⃗<sub>sys</sub> = ΣF⃗ / m<sub>sys</sub></span> &nbsp; and &nbsp; <span class="eq">F⃗<sub>net</sub> = m a⃗</span></div><ol class="steps"><li>All three blocks share the same acceleration because the connecting strings are taut and inextensible.</li><li>For the three-block system: <span class="eq">a = F/(3m)</span>.</li><li>For the left block alone, <span class="eq">T<sub>1</sub> = ma = m[F/(3m)] = F/3</span>.</li><li>For the left two blocks as a subsystem, the only external horizontal force on that subsystem is <i>T</i><sub>2</sub>: <span class="eq">T<sub>2</sub> = (2m)a = 2m[F/(3m)] = 2F/3</span>.</li></ol><div class="final">T<sub>1</sub> = F/3, &nbsp; T<sub>2</sub> = 2F/3</div></div>
+    <div class="panel mark"><h3>Suggested markscheme - 5 points</h3><table class="ms"><tr><th>Evidence</th><th>Points</th></tr><tr><td>Recognises the blocks have the same acceleration.</td><td class="pts">1</td></tr><tr><td>Obtains the system acceleration <span class="eq">a=F/(3m)</span>.</td><td class="pts">1</td></tr><tr><td>Applies Newton's second law to the left block and obtains <span class="eq">T<sub>1</sub>=F/3</span>.</td><td class="pts">1</td></tr><tr><td>Correctly treats the left two blocks as a subsystem (or uses the middle block equation).</td><td class="pts">1</td></tr><tr><td>Obtains <span class="eq">T<sub>2</sub>=2F/3</span>.</td><td class="pts">1</td></tr></table></div>
+  </section>
+
+  <section class="card" id="frq">
+    <div class="qhead"><div class="kicker">AP Physics 1 Practice FRQ - QQT</div><h2>Three blocks and two pulleys</h2><p class="prompt">Blocks B<sub>1</sub>, B<sub>2</sub>, and B<sub>3</sub> have masses <i>m</i><sub>1</sub>, <i>m</i><sub>2</sub>, and <i>m</i><sub>3</sub>, with <i>m</i><sub>1</sub> &lt; <i>m</i><sub>2</sub> &lt; <i>m</i><sub>3</sub>. The strings and pulleys are ideal and resistance is negligible. Rightward motion of B<sub>2</sub> corresponds to B<sub>1</sub> moving up and B<sub>3</sub> moving down.</p></div>
+    <div class="diagram"><svg width="760" height="270" viewBox="0 0 760 270"><line x1="130" y1="70" x2="630" y2="70" stroke="#263848" stroke-width="3"/><circle cx="140" cy="70" r="28" fill="#f5f7f9" stroke="#263848" stroke-width="3"/><circle cx="620" cy="70" r="28" fill="#f5f7f9" stroke="#263848" stroke-width="3"/><line x1="140" y1="98" x2="140" y2="180" stroke="#263848" stroke-width="3"/><line x1="620" y1="98" x2="620" y2="180" stroke="#263848" stroke-width="3"/><rect x="90" y="180" width="100" height="58" fill="#e8edf1" stroke="#263848" stroke-width="2"/><rect x="570" y="180" width="100" height="58" fill="#e8edf1" stroke="#263848" stroke-width="2"/><rect x="325" y="44" width="110" height="62" fill="#e8edf1" stroke="#263848" stroke-width="2"/><text x="140" y="213" text-anchor="middle" font-size="18">B₁  m₁</text><text x="620" y="213" text-anchor="middle" font-size="18">B₃  m₃</text><text x="380" y="80" text-anchor="middle" font-size="18">B₂  m₂</text><line x1="325" y1="70" x2="250" y2="70" stroke="#b64a45" stroke-width="4"/><polygon points="250,70 264,62 264,78" fill="#b64a45"/><text x="287" y="56" text-anchor="middle" font-size="17">T₁</text><line x1="435" y1="70" x2="510" y2="70" stroke="#215f91" stroke-width="4"/><polygon points="510,70 496,62 496,78" fill="#215f91"/><text x="472" y="56" text-anchor="middle" font-size="17">T₂</text><line x1="355" y1="126" x2="470" y2="126" stroke="#1f6b4e" stroke-width="3"/><polygon points="470,126 458,119 458,133" fill="#1f6b4e"/><text x="486" y="132" font-size="17">a</text></svg></div>
+    <div class="intro" style="margin:0 19px 16px;box-shadow:none;background:#f8fafb"><b>Katty proposes:</b> <span class="eq">a = (m<sub>3</sub> - m<sub>1</sub>)g / m<sub>2</sub>, &nbsp; T<sub>1</sub> = m<sub>1</sub>g, &nbsp; T<sub>2</sub> = m<sub>3</sub>g</span>.</div>
+  </section>
+
+  <section class="card" id="a1"><div class="qhead"><div class="kicker">FRQ Part A(i)</div><h2>Consistency with constant rightward acceleration</h2><p class="prompt">Without deciding whether Katty's equation is physically correct, is experimental result (i) - constant acceleration to the right - consistent with her expression for <i>a</i>?</p></div><div class="controls"><button class="reveal answer" onclick="togglePanel(this,'answer')">Answer only</button><button class="reveal work" onclick="togglePanel(this,'work')">Display workings</button><button class="reveal mark" onclick="togglePanel(this,'mark')">Display markscheme</button></div><div class="panel answer"><h3>Answer</h3><p><b>Yes.</b> Katty's expression predicts a constant positive value because the masses and <i>g</i> are constant and <i>m</i><sub>3</sub> &gt; <i>m</i><sub>1</sub>.</p></div><div class="panel work"><h3>Reasoning</h3><ol class="steps"><li>Katty's expression is <span class="eq">a = (m<sub>3</sub>-m<sub>1</sub>)g/m<sub>2</sub></span>.</li><li>During a trial, all three masses and <i>g</i> are constant, so the expression gives a constant acceleration.</li><li>Since <span class="eq">m<sub>3</sub> &gt; m<sub>1</sub></span>, the numerator is positive, so <span class="eq">a&gt;0</span> when right is positive.</li><li>Therefore result (i) is consistent with the proposed expression.</li></ol></div><div class="panel mark"><h3>Suggested markscheme - 2 points</h3><table class="ms"><tr><th>Evidence</th><th>Points</th></tr><tr><td>States that the result is consistent with the expression.</td><td class="pts">1</td></tr><tr><td>Justifies that the expression gives a constant positive acceleration because masses and <i>g</i> are constant and <i>m</i><sub>3</sub>&gt;<i>m</i><sub>1</sub>.</td><td class="pts">1</td></tr></table></div></section>
+
+  <section class="card" id="a2"><div class="qhead"><div class="kicker">FRQ Part A(ii)</div><h2>Doubling all three masses</h2><p class="prompt">Is experimental result (ii) - acceleration unchanged when all three masses are doubled - consistent with Katty's expression for <i>a</i>?</p></div><div class="controls"><button class="reveal answer" onclick="togglePanel(this,'answer')">Answer only</button><button class="reveal work" onclick="togglePanel(this,'work')">Display workings</button><button class="reveal mark" onclick="togglePanel(this,'mark')">Display markscheme</button></div><div class="panel answer"><h3>Answer</h3><p><b>Yes.</b> Doubling every mass multiplies both numerator and denominator by 2, so the factor cancels and <i>a</i> is unchanged.</p></div><div class="panel work"><h3>Reasoning</h3><p>Substitute <span class="eq">2m<sub>1</sub>, 2m<sub>2</sub>, 2m<sub>3</sub></span> into Katty's expression:</p><div class="eq" style="font-size:1.2rem;margin:10px 0">a' = [(2m<sub>3</sub> - 2m<sub>1</sub>)g]/(2m<sub>2</sub>) = [2(m<sub>3</sub>-m<sub>1</sub>)g]/(2m<sub>2</sub>) = a</div><p>Therefore the experimental result is consistent with her expression.</p></div><div class="panel mark"><h3>Suggested markscheme - 2 points</h3><table class="ms"><tr><th>Evidence</th><th>Points</th></tr><tr><td>States that the result is consistent with the expression.</td><td class="pts">1</td></tr><tr><td>Shows or explains that the common factor of 2 cancels from numerator and denominator.</td><td class="pts">1</td></tr></table></div></section>
+
+  <section class="card" id="b"><div class="qhead"><div class="kicker">FRQ Part B</div><h2>Identify the invalid physical assumption</h2><p class="prompt">Katty is told her equations are not correct. Identify one invalid physical assumption implied by her equations and explain why it is invalid.</p></div><div class="controls"><button class="reveal answer" onclick="togglePanel(this,'answer')">Answer only</button><button class="reveal work" onclick="togglePanel(this,'work')">Display workings</button><button class="reveal mark" onclick="togglePanel(this,'mark')">Display markscheme</button></div><div class="panel answer"><h3>Answer</h3><p>Her tension equations <span class="eq">T<sub>1</sub>=m<sub>1</sub>g</span> and <span class="eq">T<sub>2</sub>=m<sub>3</sub>g</span> imply that the hanging blocks have zero net force and therefore zero acceleration. That is impossible while the taut strings make them accelerate with the same magnitude as B<sub>2</sub>.</p></div><div class="panel work"><h3>Reasoning</h3><div class="start"><b>Useful physics relation</b><span class="eq">F⃗<sub>net</sub> = m a⃗</span></div><ol class="steps"><li>For B<sub>1</sub>, Katty sets <span class="eq">T<sub>1</sub>=m<sub>1</sub>g</span>, which would make the vertical net force zero.</li><li>For B<sub>3</sub>, she sets <span class="eq">T<sub>2</sub>=m<sub>3</sub>g</span>, which would also make the vertical net force zero.</li><li>Zero net force would mean zero acceleration for B<sub>1</sub> and B<sub>3</sub>.</li><li>But with taut, inextensible strings, B<sub>1</sub> and B<sub>3</sub> must have the same nonzero acceleration magnitude as B<sub>2</sub>. Hence the assumption is invalid.</li></ol></div><div class="panel mark"><h3>Suggested markscheme - 2 points</h3><table class="ms"><tr><th>Evidence</th><th>Points</th></tr><tr><td>Identifies that <span class="eq">T=mg</span> assumes zero net force / equilibrium for a hanging block.</td><td class="pts">1</td></tr><tr><td>Explains that the taut strings require the hanging blocks to accelerate with B<sub>2</sub>, so their net forces cannot be zero.</td><td class="pts">1</td></tr></table></div></section>
+
+  <section class="card" id="c"><div class="qhead"><div class="kicker">FRQ Part C</div><h2>Derive the correct acceleration of B<sub>2</sub></h2><p class="prompt">Derive a correct expression for the acceleration <i>a</i> of B<sub>2</sub> in terms of <i>m</i><sub>1</sub>, <i>m</i><sub>2</sub>, <i>m</i><sub>3</sub>, and <i>g</i>. Begin with a fundamental physics principle or an equation from the reference information.</p></div><div class="controls"><button class="reveal answer" onclick="togglePanel(this,'answer')">Answer only</button><button class="reveal work" onclick="togglePanel(this,'work')">Display workings</button><button class="reveal mark" onclick="togglePanel(this,'mark')">Display markscheme</button></div><div class="panel answer"><h3>Answer</h3><div class="final">a = (m<sub>3</sub> - m<sub>1</sub>)g / (m<sub>1</sub> + m<sub>2</sub> + m<sub>3</sub>)</div></div><div class="panel work"><h3>Workings</h3><div class="start"><b>AP equation-sheet start point</b><span class="eq">F⃗<sub>net</sub> = m a⃗</span></div><p>Use a positive direction along each block's motion: B<sub>1</sub> upward, B<sub>2</sub> rightward, B<sub>3</sub> downward. The taut strings give all three blocks the same acceleration magnitude <i>a</i>.</p><ol class="steps"><li>For B<sub>1</sub>: <span class="eq">T<sub>1</sub> - m<sub>1</sub>g = m<sub>1</sub>a</span>.</li><li>For B<sub>2</sub>: <span class="eq">T<sub>2</sub> - T<sub>1</sub> = m<sub>2</sub>a</span>.</li><li>For B<sub>3</sub>: <span class="eq">m<sub>3</sub>g - T<sub>2</sub> = m<sub>3</sub>a</span>.</li><li>Add the three equations. The internal tensions cancel: <span class="eq">(m<sub>3</sub>-m<sub>1</sub>)g = (m<sub>1</sub>+m<sub>2</sub>+m<sub>3</sub>)a</span>.</li><li>Therefore <span class="final">a = (m<sub>3</sub>-m<sub>1</sub>)g/(m<sub>1</sub>+m<sub>2</sub>+m<sub>3</sub>)</span>.</li></ol></div><div class="panel mark"><h3>Suggested markscheme - 5 points</h3><table class="ms"><tr><th>Evidence</th><th>Points</th></tr><tr><td>Begins from Newton's second law / <span class="eq">F⃗<sub>net</sub>=m a⃗</span> and uses consistent directions.</td><td class="pts">1</td></tr><tr><td>Correct equation for B<sub>1</sub>: <span class="eq">T<sub>1</sub>-m<sub>1</sub>g=m<sub>1</sub>a</span>.</td><td class="pts">1</td></tr><tr><td>Correct equation for B<sub>2</sub>: <span class="eq">T<sub>2</sub>-T<sub>1</sub>=m<sub>2</sub>a</span>.</td><td class="pts">1</td></tr><tr><td>Correct equation for B<sub>3</sub>: <span class="eq">m<sub>3</sub>g-T<sub>2</sub>=m<sub>3</sub>a</span>.</td><td class="pts">1</td></tr><tr><td>Adds/eliminates tensions and obtains the correct final expression.</td><td class="pts">1</td></tr></table></div></section>
+</main>
+<footer>Suggested markschemes are teacher-generated, not official College Board scoring guidelines. AP equation-sheet notation has been used for the fundamental starting equations.</footer>
+<script>
+function togglePanel(btn,type){
+  const card=btn.closest('.card');
+  const target=card.querySelector('.panel.'+type);
+  const wasOpen=target && target.classList.contains('show');
+  card.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
+  card.querySelectorAll('.reveal').forEach(b=>b.classList.remove('active'));
+  if(target && !wasOpen){target.classList.add('show');btn.classList.add('active');}
+}
+function hideAll(){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));document.querySelectorAll('.reveal').forEach(b=>b.classList.remove('active'));}
+function showAll(type){hideAll();document.querySelectorAll('.card').forEach(card=>{const p=card.querySelector('.panel.'+type);if(p){p.classList.add('show');const b=card.querySelector('.reveal.'+type);if(b)b.classList.add('active');}});}
+</script>
+</body>
+</html>
